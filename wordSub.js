@@ -1,14 +1,12 @@
-
+//to fix: handle ed, s, er, ing endings
 //loop through a body of text and substitue any words found in the dictionary
 
 
 const handleUpperCase = function(word){
 	//finds the word in the dictionary and returns the value with uppercase preserved
 	let repl = dictionary[word.toLowerCase()];
-	for (let i=0;i< word.length;i++){
-		if (word[i] == word[i].toUpperCase()) {
-			repl = repl.slice(0,i)+repl[i].toUpperCase()+repl.slice(i+1,repl.length);
-		}
+	if (word[0] == word[0].toUpperCase()){
+		repl = repl[0].toUpperCase() + repl.slice(1,repl.length)
 	}
 	return repl;
 }
