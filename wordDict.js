@@ -94,7 +94,6 @@ let dictionary = {
     willful: 'wilful',
     worshiped: 'worshipped',
     queuing: 'queueing',
-
 }
-export {dictionary};
+
 
