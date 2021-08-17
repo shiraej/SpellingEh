@@ -12,8 +12,8 @@
 
   "content_scripts": [
     {
-      "matches": ["*://*.mozilla.org/*"],
-      "js": ["./wordDict.js","./wordSub.js"]
+      "matches": ["<all_urls>"],
+      "js": [ "./wordDict.js","./wordSub.js"]
     }
   ]
 
