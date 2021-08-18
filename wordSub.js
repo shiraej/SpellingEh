@@ -3,36 +3,55 @@
 
 
 const handleUpperCase = function(word){
-	//finds the word in the dictionary and returns the value with uppercase preserved
 	let repl = dictionary[word.toLowerCase()];
-	if (word[0] == word[0].toUpperCase()){
-		repl = repl[0].toUpperCase() + repl.slice(1,repl.length)
+	for (let i=0;i< word.length;i++){
+		if (word[i] == word[i].toUpperCase()) {
+			repl = repl.slice(0,i)+repl[i].toUpperCase()+repl.slice(i+1,repl.length);
+		}
 	}
 	return repl;
+}
+
+const makeRepl = function(word, char, ind){
+
+	if (char.test(word[ind])){
+		let nosymb = word.slice(0,ind)
+		let sChar = /s/;	//check for s at end before symbol
+		let sInd = ind-1
+		if (makeRepl(word,sChar,sInd)) {
+			let repl = makeRepl(word,sChar,sInd);
+			return repl;
+		}
+		if (nosymb.toLowerCase() in dictionary) {
+			let repl = handleUpperCase(nosymb);
+			repl = repl+word.slice(ind,word.length);
+			return repl;
+		}
+		else {return false;}
+
+	}
+	else {
+		if (word.toLowerCase() in dictionary) {
+			let repl = handleUpperCase(word);
+			return repl;
+		}
+		else {return false;}
+	}
 }
 
 const wordSubber = function (bodyoftext, dict = dictionary) {
 	//1. split the body of text into a word array
 	let wordsArr = bodyoftext.split(' ');
-    
+    let symbChar = /[$-/:-?{-~!"^_`\[\]s]/;
 	//2. loop through these words
 	for (let word of wordsArr) {
-		//handle symbol at end of word
+		//check for symbol at end of word
 		let lastInd = word.length-1;
-		if (/[^\p{L}\d\s]/u.test(word[lastInd])){ 	//the regex here searches for any character that isn't a-z 0-9
-			let nosymb = word.slice(0,lastInd)
-			if (nosymb.toLowerCase() in dictionary) {	
-				let repl = handleUpperCase(nosymb);
-				repl = repl+word[lastInd];
-				wordsArr[wordsArr.indexOf(word)] = repl;
-			}
+		let repl = makeRepl(word,symbChar, lastInd);
+		if (repl){
+			wordsArr[wordsArr.indexOf(word)] = repl;
 		}
-		else {
-			if (word.toLowerCase() in dictionary) {
-				let repl = handleUpperCase(word);
-				wordsArr[wordsArr.indexOf(word)] = repl;
-			}
-		}
+		else {continue}
 	}
 	return wordsArr.join(' ');
 }
