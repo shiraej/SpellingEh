@@ -17,7 +17,7 @@ const makeRepl = function(word, char, ind){
 	if (char.test(word[ind])){
 		let nosymb = word.slice(0,ind)
 		let sChar = /s/;	//check for s at end before symbol
-		let sInd = ind-1
+		let sInd = ind-1	//index before symbol
 		if (makeRepl(word,sChar,sInd)) {
 			let repl = makeRepl(word,sChar,sInd);
 			return repl;
@@ -39,7 +39,7 @@ const makeRepl = function(word, char, ind){
 	}
 }
 
-const wordSubber = function (textNode, dict = dictionary) {
+const wordSubber = function (textNode) {
 	//handles the search through all words in an inputted text node
 	
 	//1. split the body of text into a word array

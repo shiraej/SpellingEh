@@ -19,7 +19,6 @@ let dictionary = {
     candor: 'candour',
     center: 'centre',
     centimeter: 'centimetre',
-    check: 'cheque',
     color: 'colour',
     colored: 'coloured',
     counselor: 'counsellor',
